@@ -51,10 +51,12 @@ the result of compiling the expression can be cached and run
 multiple times against different data:
 
 ```js
-var expr = jmespath.decorate({})('a');
-// expr is now a cached compiled version of the search expression
-var value = expr({ a: 1 });
+const expr = jmespath.decorate({})('a');
+let value;
+
+value = expr({a: 1});
 assert.strictEqual(value, 1);
-value = expr({ a: 2 });
+
+value = expr({a: 2});
 assert.strictEqual(value, 2);
 ```
