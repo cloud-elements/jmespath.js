@@ -13,10 +13,11 @@ take a JSON document and transform it into another JSON document through a JMESP
 
 ```js
 var jmespath = require('jmespath');
-jmespath.search({foo: {bar: {baz: [0, 1, 2, 3, 4]}}}, "foo.bar.baz[2]")
+
+jmespath.search({foo: {bar: {baz: [1, 2, 3]}}}, 'foo.bar.baz[2]')
 ```
 
-> `2`
+> `3`
 
 ## Adding custom functions
 
