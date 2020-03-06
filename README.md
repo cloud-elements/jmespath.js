@@ -28,9 +28,11 @@ Custom functions can be added to the JMESPath runtime by using the
 function customFunc(resolvedArgs) {
   return resolvedArgs[0] + 99;
 }
+
 var extraFunctions = {
   custom: {_func: customFunc, _signature: [{types: [jmespath.types.TYPE_NUMBER]}]},
 };
+
 jmespath.decorate(extraFunctions);
 ```
 
@@ -39,9 +41,10 @@ The value returned by the decorate function is a curried function
 first and then the data to search against as the second parameter:
 
 ```js
-var value = jmespath.decorate(extraFunctions)('custom(`1`)')({})
-// value = 100
+jmespath.decorate(extraFunctions)('custom(`1`)')({})
 ```
+
+> `100`
 
 Because the return value from `decorate()` is a curried function
 the result of compiling the expression can be cached and run 
