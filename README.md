@@ -30,7 +30,7 @@ from a list.  Here are a few more examples:
 jmespath.search({foo: {bar: {baz: [0, 1, 2, 3, 4]}}}, "foo.bar")
 ```
 
-> `{baz: [ 0, 1, 2, 3, 4 ]}
+> `{baz: [ 0, 1, 2, 3, 4 ]}`
 
 ```js
 jmespath.search({"foo": [{"first": "a", "last": "b"},
