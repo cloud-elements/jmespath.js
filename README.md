@@ -12,7 +12,7 @@ jmespath.js is a javascript implementation of JMESPath, which is a query languag
 take a JSON document and transform it into another JSON document through a JMESPath expression.
 
 ```js
-var jmespath = require('jmespath');
+const jmespath = require('jmespath');
 
 jmespath.search({foo: {bar: {baz: [1, 2, 3]}}}, 'foo.bar.baz[2]')
 ```
@@ -28,7 +28,7 @@ function customFunc(resolvedArgs) {
   return resolvedArgs[0] + 99;
 }
 
-var extraFunctions = {
+const extraFunctions = {
   custom: {_func: customFunc, _signature: [{types: [jmespath.types.TYPE_NUMBER]}]},
 };
 
