@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const jmespath = require('../src/jmespath');
 
 process.stdin.setEncoding('utf-8');
