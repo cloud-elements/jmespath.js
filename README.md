@@ -21,8 +21,7 @@ jmespath.search({foo: {bar: {baz: [1, 2, 3]}}}, 'foo.bar.baz[2]')
 
 ## Adding custom functions
 
-Custom functions can be added to the JMESPath runtime by using the
-`decorate()` function:
+Custom functions can be added to the JMESPath runtime by using the `decorate` function:
 
 ```js
 function customFunc(resolvedArgs) {
@@ -36,9 +35,8 @@ var extraFunctions = {
 jmespath.decorate(extraFunctions);
 ```
 
-The value returned by the decorate function is a curried function
-(takes arguments one at a time) that takes the search expression 
-first and then the data to search against as the second parameter:
+The value returned by the decorate function is a curried function (takes arguments one at a time)
+that takes the search expression first and then the data to search against as the second parameter:
 
 ```js
 jmespath.decorate(extraFunctions)('custom(`1`)')({})
@@ -46,9 +44,8 @@ jmespath.decorate(extraFunctions)('custom(`1`)')({})
 
 > `100`
 
-Because the return value from `decorate()` is a curried function
-the result of compiling the expression can be cached and run 
-multiple times against different data:
+Because the return value from `decorate` is a curried function the result of compiling the
+expression can be cached and run multiple times against different data:
 
 ```js
 const expr = jmespath.decorate({})('a');
