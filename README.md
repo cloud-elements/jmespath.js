@@ -14,41 +14,9 @@ take a JSON document and transform it into another JSON document through a JMESP
 ```js
 var jmespath = require('jmespath');
 jmespath.search({foo: {bar: {baz: [0, 1, 2, 3, 4]}}}, "foo.bar.baz[2]")
-
-// output = 2
 ```
 
-In the example we gave the ``search`` function input data of
-`{foo: {bar: {baz: [0, 1, 2, 3, 4]}}}` as well as the JMESPath
-expression `foo.bar.baz[2]`, and the `search` function evaluated
-the expression against the input data to produce the result ``2``.
-
-The JMESPath language can do a lot more than select an element
-from a list.  Here are a few more examples:
-
-```js
-jmespath.search({foo: {bar: {baz: [0, 1, 2, 3, 4]}}}, "foo.bar")
-```
-
-> `{baz: [ 0, 1, 2, 3, 4 ]}`
-
-```js
-jmespath.search({"foo": [{"first": "a", "last": "b"},
-                         {"first": "c", "last": "d"}]},
-                  "foo[*].first")
-```
-
-> `['a', 'c']`
-
-```js
-jmespath.search({"foo": [{"age": 20}, {"age": 25},
-                         {"age": 30}, {"age": 35},
-                         {"age": 40}
-                        ]},
-                "foo[?age > `30`]")
-```
-
-> `[{age: 35}, {age: 40}]`
+> `2`
 
 ## Adding custom functions
 
