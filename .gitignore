@@ -1,4 +1,34 @@
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Common files
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+
+# Common directories
+pids
+logs
+results
+tmp
+
+# Coverage
+.nyc_output
+coverage
+
+# Dotenv
+.env
+
+# Dependencies
 node_modules
-/yarn.lock
-package-lock.json
+
+# Editors
 .idea
+*.iml
+.vscode

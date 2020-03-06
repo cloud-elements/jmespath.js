@@ -1,4 +1,4 @@
-var jmespath = require('./jmespath')
+var jmespath = require('./src/jmespath')
 var Benchmark = require('benchmark');
 var suite = new Benchmark.Suite;
 

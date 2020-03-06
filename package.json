@@ -1,13 +1,13 @@
 {
-  "name": "@daz.is/jmespath",
+  "name": "@cloudelements/jmespath",
   "description": "JMESPath implementation in javascript",
-  "version": "1.1.2",
+  "version": "0.16.0",
   "author": {
     "name": "James Saryerwinnie",
     "email": "js@jamesls.com",
     "url": "http://jamesls.com/"
   },
-  "homepage": "https://github.com/daz-is/jmespath.js",
+  "homepage": "https://github.com/cloud-elements/jmespath.js",
   "contributors": [
     {
       "name": "Darren Mothersele",
@@ -16,27 +16,21 @@
     }
   ],
   "devDependencies": {
-    "grunt": "^1.0.4",
-    "grunt-contrib-jshint": "^2.1.0",
-    "grunt-contrib-uglify": "^0.11.1",
-    "grunt-eslint": "^22.0.0",
+    "eslint": "^6.8.0",
     "mocha": "^7.1.0"
   },
   "dependencies": {},
-  "main": "jmespath.js",
+  "main": "./src/jmespath",
+  "bin": "./bin/jmespath",
   "directories": {
     "test": "test"
   },
   "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 12.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/daz-is/jmespath.js"
-  },
-  "bugs": {
-    "url": "http://github.com/daz-is/jmespath.js/issues",
-    "mail": ""
+    "url": "git://github.com/cloud-elements/jmespath.js"
   },
   "license": "Apache-2.0",
   "keywords": [
@@ -46,6 +40,8 @@
     "xpath"
   ],
   "scripts": {
-    "test": "mocha test/"
+    "eslint": "eslint 'bin/**' 'src/**' 'test/**'",
+    "mocha": "mocha test/",
+    "test": "npm run eslint && npm run mocha"
   }
 }
