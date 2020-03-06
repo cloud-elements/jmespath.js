@@ -23,8 +23,8 @@
     "mocha": "^7.1.0"
   },
   "dependencies": {},
-  "main": "src/jmespath.js",
-  "bin": "./bin/run",
+  "main": "./src/jmespath",
+  "bin": "./bin/jmespath",
   "directories": {
     "test": "test"
   },
