@@ -23,7 +23,7 @@
     "mocha": "^7.1.0"
   },
   "dependencies": {},
-  "main": "jmespath.js",
+  "main": "src/jmespath.js",
   "directories": {
     "test": "test"
   },
