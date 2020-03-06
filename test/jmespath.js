@@ -1,5 +1,5 @@
 var assert = require('assert');
-var jmespath = require('../jmespath');
+var jmespath = require('../src/jmespath');
 var tokenize = jmespath.tokenize;
 var compile = jmespath.compile;
 var strictDeepEqual = jmespath.strictDeepEqual;
