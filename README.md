@@ -3,7 +3,7 @@
 ## Install
 
 ```console
-$ npm install --save @cloud-elements/jmespath
+$ npm install --save @cloudelements/jmespath
 ```
 
 ## About
