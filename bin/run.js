@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-jmespath = require('./src/jmespath');
+jmespath = require('../src/jmespath');
 
 process.stdin.setEncoding('utf-8');
 
