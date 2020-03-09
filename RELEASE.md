@@ -26,7 +26,7 @@ $ git push origin master
 ## Create git tag
 
 ```console
-$ git tag -a vY.Y.Z -m "chore(release): cut version X.Y.Z"
+$ git tag -a vX.Y.Z -m "chore(release): cut version X.Y.Z"
 ...
 $ git push --tags
 ...
