@@ -1,10 +1,10 @@
 # jmespath.js
 
-jmespath.js is a JavaScript implementation of JMESPath, which is a query language for JSON. It will
-take a JSON document and transform it into another JSON document through a JMESPath expression.
-This fork is based off of the [daz-is/jmespath.js](https://github.com/daz-is/jmespath.js) fork,
-which is highly recommended to leverage instead of this project. This fork exists for strict
-compliance, security, and Cloud Elements feature deviation purposes alone.
+A JavaScript implementation of JMESPath, which is a query language for JSON. It will take a JSON
+document and transform it into another JSON document through a JMESPath expression. This fork was
+originally based from the [daz-is/jmespath.js](https://github.com/daz-is/jmespath.js) fork, which
+is highly recommended to leverage instead of this project. This fork exists for strict compliance,
+security, and organizational feature deviation purposes alone.
 
 ```js
 const jmespath = require('jmespath');
