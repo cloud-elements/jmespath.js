@@ -8,7 +8,7 @@ $ npm install --save @cloudelements/jmespath
 
 ## About
 
-jmespath.js is a javascript implementation of JMESPath, which is a query language for JSON. It will
+jmespath.js is a Javascript implementation of JMESPath, which is a query language for JSON. It will
 take a JSON document and transform it into another JSON document through a JMESPath expression.
 
 ```js
