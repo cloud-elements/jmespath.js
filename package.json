@@ -1,6 +1,6 @@
 {
   "name": "@cloudelements/jmespath",
-  "description": "JMESPath implementation in Javascript",
+  "description": "JMESPath implementation in JavaScript",
   "version": "0.16.0",
   "author": {
     "name": "James Saryerwinnie",
@@ -21,8 +21,9 @@
     "mocha": "^7.1.0"
   },
   "dependencies": {},
-  "main": "./src/jmespath",
+  "main": "./src/jmespath.js",
   "bin": "./bin/jmespath",
+  "types": "./src/jmespath.d.ts",
   "directories": {
     "test": "test"
   },
@@ -42,7 +43,7 @@
   ],
   "scripts": {
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -s",
-    "eslint": "eslint 'bin/**' 'src/**' 'test/**'",
+    "eslint": "eslint 'bin/**/*' 'src/**/*.js' 'test/**/*.js'",
     "mocha": "mocha test/",
     "test": "npm run eslint && npm run mocha"
   }
