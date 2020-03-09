@@ -1,15 +1,10 @@
 # jmespath.js
 
-## Install
-
-```console
-$ npm install --save @cloudelements/jmespath
-```
-
-## About
-
-jmespath.js is a Javascript implementation of JMESPath, which is a query language for JSON. It will
+jmespath.js is a JavaScript implementation of JMESPath, which is a query language for JSON. It will
 take a JSON document and transform it into another JSON document through a JMESPath expression.
+This fork is based off of the [daz-is/jmespath.js](https://github.com/daz-is/jmespath.js) fork,
+which is highly recommended to leverage instead of this project. This fork exists for strict
+compliance, security, and Cloud Elements feature deviation purposes alone.
 
 ```js
 const jmespath = require('jmespath');
@@ -18,6 +13,13 @@ jmespath.search({foo: {bar: {baz: [1, 2, 3]}}}, 'foo.bar.baz[2]')
 ```
 
 > `3`
+
+
+## Installation
+
+```console
+$ npm install --save @cloudelements/jmespath
+```
 
 ## Adding custom functions
 
