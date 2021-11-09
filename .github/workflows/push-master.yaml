@@ -16,3 +16,5 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
+    - run: npm install
+    - run: npm test
