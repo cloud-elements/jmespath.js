@@ -233,6 +233,33 @@ describe('search', function() {
     );
 });
 
+describe('over', function() {
+  it('should mutate objects', function() {
+    assert.deepStrictEqual(
+      jmespath.over({a: 1, b: 2}, 'a', (a) => a.toString()),
+      {a: '1', b: 2}
+    );
+    assert.deepStrictEqual(
+      jmespath.over({a: {b: {c: {d: 1}}}, e: 2}, 'a.b.c.d', (a) => a.toString()),
+      {a: {b: {c: {d: '1'}}}, e: 2}
+    );
+  });
+
+  it('should mutate arrays', function() {
+    assert.deepStrictEqual(
+      jmespath.over({a: [1, 2, 3]}, 'a | [0]', (a) => a.toString()),
+      {a: ['1', 2, 3]}
+    );
+  });
+
+  it('should mutate slices', function() {
+    assert.deepStrictEqual(
+      jmespath.over({a: [1, 2, 3]}, 'a[0:3]', (a) => a.toString()),
+      {a: ['1', '2', '3']}
+    );
+  });
+});
+
 describe('decorate', function() {
   it(
     'should call a custom function when called via decorator',
