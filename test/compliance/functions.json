@@ -56,6 +56,10 @@
       "error": "invalid-arity"
     },
     {
+      "expression": "add(`1`, `2`)",
+      "result": 3
+    },
+    {
       "expression": "unknown_function(`1`, `2`)",
       "error": "unknown-function"
     },
