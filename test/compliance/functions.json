@@ -296,6 +296,10 @@
       "result": "a"
     },
     {
+      "expression": "sub(`5`, `3`)",
+      "result": 2
+    },
+    {
       "expression": "type('abc')",
       "result": "string"
     },

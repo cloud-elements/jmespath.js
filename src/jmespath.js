@@ -1471,6 +1471,7 @@
           _func: this._functionSortBy,
           _signature: [{types: [TYPE_ARRAY]}, {types: [TYPE_EXPREF]}]
         },
+        sub: {_func: this._functionSub, _signature: [{types: [TYPE_NUMBER]}, {types: [TYPE_NUMBER]}]},
         join: {
             _func: this._functionJoin,
             _signature: [
@@ -1732,6 +1733,10 @@
       } else {
         return null;
       }
+    },
+
+    _functionSub: function(resolvedArgs) {
+      return resolvedArgs[0] - resolvedArgs[1];
     },
 
     _functionSum: function(resolvedArgs) {
