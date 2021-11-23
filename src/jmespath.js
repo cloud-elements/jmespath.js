@@ -1424,6 +1424,7 @@
         // occurs on the argument.  Variadic is optional
         // and if not provided is assumed to be false.
         abs: {_func: this._functionAbs, _signature: [{types: [TYPE_NUMBER]}]},
+        add: {_func: this._functionAdd, _signature: [{types: [TYPE_NUMBER]}, {types: [TYPE_NUMBER]}]},
         avg: {_func: this._functionAvg, _signature: [{types: [TYPE_ARRAY_NUMBER]}]},
         ceil: {_func: this._functionCeil, _signature: [{types: [TYPE_NUMBER]}]},
         contains: {
@@ -1634,6 +1635,10 @@
 
     _functionAbs: function(resolvedArgs) {
       return Math.abs(resolvedArgs[0]);
+    },
+
+    _functionAdd: function(resolvedArgs) {
+      return resolvedArgs[0] + resolvedArgs[1];
     },
 
     _functionCeil: function(resolvedArgs) {
