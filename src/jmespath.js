@@ -1803,6 +1803,12 @@
             if (!isNaN(convertedValue)) {
                 return convertedValue;
             }
+
+            // Support for RFC-2822 and ISO-8601 (in UTC) to number.
+            convertedValue = new Date(resolvedArgs[0]);
+            if (!isNaN(convertedValue.getTime())) {
+              return convertedValue.getTime(); // In milliseconds.
+            }
         }
         return null;
     },

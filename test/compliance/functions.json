@@ -520,6 +520,22 @@
       "result": null
     },
     {
+      "expression": "to_number('1970-01-01T00:00:00Z')",
+      "result": 0
+    },
+    {
+      "expression": "to_number('1970-01-01T00:00:00.000Z')",
+      "result": 0
+    },
+    {
+      "expression": "to_number('1970-01-01T00:00:01Z')",
+      "result": 1000
+    },
+    {
+      "expression": "to_number('1970-01-01T00:00:00.001Z')",
+      "result": 1
+    },
+    {
       "expression": "\"to_string\"(`1.0`)",
       "error": "syntax"
     },
