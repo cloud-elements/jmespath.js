@@ -60,6 +60,18 @@
       "result": 3
     },
     {
+      "expression": "add(null_key, `2`)",
+      "result": 2
+    },
+    {
+      "expression": "add(`1`, null_key)",
+      "result": 1
+    },
+    {
+      "expression": "add(null_key, null_key)",
+      "result": 0
+    },
+    {
       "expression": "unknown_function(`1`, `2`)",
       "error": "unknown-function"
     },
@@ -132,6 +144,18 @@
       "result": false
     },
     {
+      "expression": "contains('abc', null_key)",
+      "result": false
+    },
+    {
+      "expression": "contains(null_key, 'a')",
+      "result": false
+    },
+    {
+      "expression": "contains(null_key, null_key)",
+      "result": false
+    },
+    {
       "expression": "ends_with(str, 'r')",
       "result": true
     },
@@ -154,6 +178,18 @@
     {
       "expression": "ends_with(str, `0`)",
       "error": "invalid-type"
+    },
+    {
+      "expression": "ends_with(null_key, `r`)",
+      "result": false
+    },
+    {
+      "expression": "ends_with(str, null_key)",
+      "result": false
+    },
+    {
+      "expression": "ends_with(null_key, null_key)",
+      "result": false
     },
     {
       "expression": "floor(`1.2`)",
@@ -218,6 +254,10 @@
     {
       "expression": "length(strings[0])",
       "result": 1
+    },
+    {
+      "expression": "length(null_key)",
+      "result": 0
     },
     {
       "expression": "max(numbers)",
@@ -298,6 +338,18 @@
     {
       "expression": "sub(`5`, `3`)",
       "result": 2
+    },
+    {
+      "expression": "sub(null_key, `3`)",
+      "result": -3
+    },
+    {
+      "expression": "sub(`5`, null_key)",
+      "result": 5
+    },
+    {
+      "expression": "sub(null_key, null_key)",
+      "result": 0
     },
     {
       "expression": "type('abc')",
@@ -442,6 +494,18 @@
     {
       "expression": "starts_with(str, `0`)",
       "error": "invalid-type"
+    },
+    {
+      "expression": "starts_with(null_key, `S`)",
+      "result": false
+    },
+    {
+      "expression": "starts_with(str, null_key)",
+      "result": false
+    },
+    {
+      "expression": "starts_with(null_key, null_key)",
+      "result": false
     },
     {
       "expression": "sum(numbers)",
