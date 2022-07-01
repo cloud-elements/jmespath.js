@@ -1466,7 +1466,9 @@
         // occurs on the argument.  Variadic is optional
         // and if not provided is assumed to be false.
         abs: {_func: this._functionAbs, _signature: [{types: [TYPE_NUMBER]}]},
-        add: {_func: this._functionAdd, _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
+        add: {
+            _func: this._functionAdd,
+            _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
         avg: {_func: this._functionAvg, _signature: [{types: [TYPE_ARRAY_NUMBER]}]},
         ceil: {_func: this._functionCeil, _signature: [{types: [TYPE_NUMBER]}]},
         contains: {
@@ -1513,7 +1515,9 @@
           _func: this._functionSortBy,
           _signature: [{types: [TYPE_ARRAY]}, {types: [TYPE_EXPREF]}]
         },
-        sub: {_func: this._functionSub, _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
+        sub: {
+            _func: this._functionSub,
+            _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
         join: {
             _func: this._functionJoin,
             _signature: [
