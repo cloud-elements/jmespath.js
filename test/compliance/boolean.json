@@ -203,6 +203,7 @@
   },
   {
     "given": {
+      "null": null,
       "one": 1,
       "two": 2,
       "three": 3
@@ -213,11 +214,47 @@
         "result": true
       },
       {
+        "expression": "null < two",
+        "result": false
+      },
+      {
+        "expression": "one < null",
+        "result": false
+      },
+      {
+        "expression": "null < null",
+        "result": false
+      },
+      {
         "expression": "one <= two",
         "result": true
       },
       {
+        "expression": "null <= two",
+        "result": false
+      },
+      {
+        "expression": "one <= null",
+        "result": false
+      },
+      {
+        "expression": "null <= null",
+        "result": true
+      },
+      {
         "expression": "one == one",
+        "result": true
+      },
+      {
+        "expression": "null == one",
+        "result": false
+      },
+      {
+        "expression": "one == null",
+        "result": false
+      },
+      {
+        "expression": "null == null",
         "result": true
       },
       {
@@ -229,12 +266,48 @@
         "result": false
       },
       {
+        "expression": "null > two",
+        "result": false
+      },
+      {
+        "expression": "one > null",
+        "result": false
+      },
+      {
+        "expression": "null > null",
+        "result": false
+      },
+      {
         "expression": "one >= two",
         "result": false
       },
       {
+        "expression": "null >= two",
+        "result": false
+      },
+      {
+        "expression": "one >= null",
+        "result": false
+      },
+      {
+        "expression": "null >= null",
+        "result": true
+      },
+      {
         "expression": "one != two",
         "result": true
+      },
+      {
+        "expression": "null != two",
+        "result": true
+      },
+      {
+        "expression": "one != null",
+        "result": true
+      },
+      {
+        "expression": "null != null",
+        "result": false
       },
       {
         "expression": "one < two && three > one",

@@ -240,6 +240,29 @@
              ch === "_";
   }
 
+  function getTypeName(obj) {
+    switch (Object.prototype.toString.call(obj)) {
+        case "[object String]":
+          return TYPE_STRING;
+        case "[object Number]":
+          return TYPE_NUMBER;
+        case "[object Array]":
+          return TYPE_ARRAY;
+        case "[object Boolean]":
+          return TYPE_BOOLEAN;
+        case "[object Null]":
+          return TYPE_NULL;
+        case "[object Object]":
+          // Check if it's an expref.  If it has, it's been
+          // tagged with a jmespathType attr of 'Expref';
+          if (obj.jmespathType === TOK_EXPREF) {
+            return TYPE_EXPREF;
+          } else {
+            return TYPE_OBJECT;
+          }
+    }
+  }
+
   function Lexer() {
   }
   Lexer.prototype = {
@@ -866,7 +889,6 @@
       }
   };
 
-
   function TreeInterpreter(runtime) {
     this.runtime = runtime;
   }
@@ -988,23 +1010,43 @@
             case "Comparator":
               first = this.visit(node.children[0], value);
               second = this.visit(node.children[1], value);
+              var firstTypeName = getTypeName(first);
+              var secondTypeName = getTypeName(second);
               switch(node.name) {
                 case TOK_EQ:
+                  if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
+                    return firstTypeName === secondTypeName;
+                  }
                   result = strictDeepEqual(first, second);
                   break;
                 case TOK_NE:
+                  if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
+                    return firstTypeName !== secondTypeName;
+                  }
                   result = !strictDeepEqual(first, second);
                   break;
                 case TOK_GT:
+                  if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
+                    return false;
+                  }
                   result = first > second;
                   break;
                 case TOK_GTE:
+                  if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
+                    return firstTypeName === secondTypeName;
+                  }
                   result = first >= second;
                   break;
                 case TOK_LT:
+                  if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
+                    return false;
+                  }
                   result = first < second;
                   break;
                 case TOK_LTE:
+                  if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
+                    return firstTypeName === secondTypeName;
+                  }
                   result = first <= second;
                   break;
                 default:
@@ -1528,7 +1570,7 @@
         for (var i = 0; i < signature.length; i++) {
             typeMatched = false;
             currentSpec = signature[i].types;
-            actualType = this._getTypeName(args[i]);
+            actualType = getTypeName(args[i]);
             for (var j = 0; j < currentSpec.length; j++) {
                 if (this._typeMatches(actualType, currentSpec[j], args[i])) {
                     typeMatched = true;
@@ -1574,7 +1616,7 @@
                 }
                 for (var i = 0; i < argValue.length; i++) {
                     if (!this._typeMatches(
-                            this._getTypeName(argValue[i]), subtype,
+                            getTypeName(argValue[i]), subtype,
                                              argValue[i])) {
                         return false;
                     }
@@ -1583,28 +1625,6 @@
             }
         } else {
             return actual === expected;
-        }
-    },
-    _getTypeName: function(obj) {
-        switch (Object.prototype.toString.call(obj)) {
-            case "[object String]":
-              return TYPE_STRING;
-            case "[object Number]":
-              return TYPE_NUMBER;
-            case "[object Array]":
-              return TYPE_ARRAY;
-            case "[object Boolean]":
-              return TYPE_BOOLEAN;
-            case "[object Null]":
-              return TYPE_NULL;
-            case "[object Object]":
-              // Check if it's an expref.  If it has, it's been
-              // tagged with a jmespathType attr of 'Expref';
-              if (obj.jmespathType === TOK_EXPREF) {
-                return TYPE_EXPREF;
-              } else {
-                return TYPE_OBJECT;
-              }
         }
     },
 
@@ -1619,7 +1639,7 @@
     },
 
     _functionReverse: function(resolvedArgs) {
-        var typeName = this._getTypeName(resolvedArgs[0]);
+        var typeName = getTypeName(resolvedArgs[0]);
         if (typeName === TYPE_STRING) {
           var originalStr = resolvedArgs[0];
           var reversedStr = "";
@@ -1697,7 +1717,7 @@
 
     _functionMax: function(resolvedArgs) {
       if (resolvedArgs[0].length > 0) {
-        var typeName = this._getTypeName(resolvedArgs[0][0]);
+        var typeName = getTypeName(resolvedArgs[0][0]);
         if (typeName === TYPE_NUMBER) {
           return Math.max.apply(Math, resolvedArgs[0]);
         } else {
@@ -1717,7 +1737,7 @@
 
     _functionMin: function(resolvedArgs) {
       if (resolvedArgs[0].length > 0) {
-        var typeName = this._getTypeName(resolvedArgs[0][0]);
+        var typeName = getTypeName(resolvedArgs[0][0]);
         if (typeName === TYPE_NUMBER) {
           return Math.min.apply(Math, resolvedArgs[0]);
         } else {
@@ -1749,7 +1769,7 @@
     },
 
     _functionType: function(resolvedArgs) {
-        switch (this._getTypeName(resolvedArgs[0])) {
+        switch (getTypeName(resolvedArgs[0])) {
           case TYPE_NUMBER:
             return "number";
           case TYPE_STRING:
@@ -1788,7 +1808,7 @@
     },
 
     _functionToArray: function(resolvedArgs) {
-        if (this._getTypeName(resolvedArgs[0]) === TYPE_ARRAY) {
+        if (getTypeName(resolvedArgs[0]) === TYPE_ARRAY) {
             return resolvedArgs[0];
         } else {
             return [resolvedArgs[0]];
@@ -1796,7 +1816,7 @@
     },
 
     _functionToString: function(resolvedArgs) {
-        if (this._getTypeName(resolvedArgs[0]) === TYPE_STRING) {
+        if (getTypeName(resolvedArgs[0]) === TYPE_STRING) {
             return resolvedArgs[0];
         } else {
             return JSON.stringify(resolvedArgs[0]);
@@ -1804,7 +1824,7 @@
     },
 
     _functionToNumber: function(resolvedArgs) {
-        var typeName = this._getTypeName(resolvedArgs[0]);
+        var typeName = getTypeName(resolvedArgs[0]);
         var convertedValue;
         if (typeName === TYPE_NUMBER) {
             return resolvedArgs[0];
@@ -1825,7 +1845,7 @@
 
     _functionNotNull: function(resolvedArgs) {
         for (var i = 0; i < resolvedArgs.length; i++) {
-            if (this._getTypeName(resolvedArgs[i]) !== TYPE_NULL) {
+            if (getTypeName(resolvedArgs[i]) !== TYPE_NULL) {
                 return resolvedArgs[i];
             }
         }
@@ -1845,7 +1865,7 @@
         }
         var interpreter = this._interpreter;
         var exprefNode = resolvedArgs[1];
-        var requiredType = this._getTypeName(
+        var requiredType = getTypeName(
             interpreter.visit(exprefNode, sortedArray[0]));
         if ([TYPE_NUMBER, TYPE_STRING].indexOf(requiredType) < 0) {
             throw new Error("TypeError");
@@ -1865,14 +1885,14 @@
         decorated.sort(function(a, b) {
           var exprA = interpreter.visit(exprefNode, a[1]);
           var exprB = interpreter.visit(exprefNode, b[1]);
-          if (that._getTypeName(exprA) !== requiredType) {
+          if (getTypeName(exprA) !== requiredType) {
               throw new Error(
                   "TypeError: expected " + requiredType + ", received " +
-                  that._getTypeName(exprA));
-          } else if (that._getTypeName(exprB) !== requiredType) {
+                  getTypeName(exprA));
+          } else if (getTypeName(exprB) !== requiredType) {
               throw new Error(
                   "TypeError: expected " + requiredType + ", received " +
-                  that._getTypeName(exprB));
+                  getTypeName(exprB));
           }
           if (exprA > exprB) {
             return 1;
@@ -1927,20 +1947,18 @@
     },
 
     createKeyFunction: function(exprefNode, allowedTypes) {
-      var that = this;
       var interpreter = this._interpreter;
       var keyFunc = function(x) {
         var current = interpreter.visit(exprefNode, x);
-        if (allowedTypes.indexOf(that._getTypeName(current)) < 0) {
+        if (allowedTypes.indexOf(getTypeName(current)) < 0) {
           var msg = "TypeError: expected one of " + allowedTypes +
-                    ", received " + that._getTypeName(current);
+                    ", received " + getTypeName(current);
           throw new Error(msg);
         }
         return current;
       };
       return keyFunc;
     }
-
   };
 
   function compile(stream) {
