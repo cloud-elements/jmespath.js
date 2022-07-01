@@ -1,3 +1,13 @@
+# [0.20.0](https://github.com/cloud-elements/jmespath.js/compare/v0.19.0...v0.20.0) (2022-07-01)
+
+
+### Features
+
+* add pola-mode for comparators ([#9](https://github.com/cloud-elements/jmespath.js/issues/9)) ([ebd2655](https://github.com/cloud-elements/jmespath.js/commit/ebd2655650c97b7a11f3caf998ad7e9c050db4e0))
+* pola add, contains, ends_with, length, starts_with, sub fns ([#10](https://github.com/cloud-elements/jmespath.js/issues/10)) ([8918107](https://github.com/cloud-elements/jmespath.js/commit/8918107d28a69807d3bc79d186cac6a3f4053fd1))
+
+
+
 # [0.19.0](https://github.com/cloud-elements/jmespath.js/compare/v0.18.0...v0.19.0) (2021-11-23)
 
 
