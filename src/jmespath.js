@@ -1709,12 +1709,12 @@
 
         if (argTypeName === TYPE_NULL) {
           return 0;
-        } else if (argTypeName === TYPE_ARRAY) {
-          return resolvedArgs[0].length;
-        } else {
+        } else if (argTypeName === TYPE_OBJECT) {
           // As far as I can tell, there's no way to get the length
           // of an object without O(n) iteration through the object.
           return Object.keys(resolvedArgs[0]).length;
+        } else {
+          return resolvedArgs[0].length;
         }
     },
 
