@@ -1466,7 +1466,7 @@
         // occurs on the argument.  Variadic is optional
         // and if not provided is assumed to be false.
         abs: {_func: this._functionAbs, _signature: [{types: [TYPE_NUMBER]}]},
-        add: {_func: this._functionAdd, _signature: [{types: [TYPE_NUMBER]}, {types: [TYPE_NUMBER]}]},
+        add: {_func: this._functionAdd, _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
         avg: {_func: this._functionAvg, _signature: [{types: [TYPE_ARRAY_NUMBER]}]},
         ceil: {_func: this._functionCeil, _signature: [{types: [TYPE_NUMBER]}]},
         contains: {
@@ -1513,7 +1513,7 @@
           _func: this._functionSortBy,
           _signature: [{types: [TYPE_ARRAY]}, {types: [TYPE_EXPREF]}]
         },
-        sub: {_func: this._functionSub, _signature: [{types: [TYPE_NUMBER]}, {types: [TYPE_NUMBER]}]},
+        sub: {_func: this._functionSub, _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
         join: {
             _func: this._functionJoin,
             _signature: [
@@ -1673,7 +1673,10 @@
     },
 
     _functionAdd: function(resolvedArgs) {
-      return resolvedArgs[0] + resolvedArgs[1];
+      var firstArg = getTypeName(resolvedArgs[0]) === TYPE_NULL ? 0 : resolvedArgs[0];
+      var secondArg = getTypeName(resolvedArgs[1]) === TYPE_NULL ? 0 : resolvedArgs[1];
+
+      return firstArg + secondArg;
     },
 
     _functionCeil: function(resolvedArgs) {
@@ -1781,7 +1784,10 @@
     },
 
     _functionSub: function(resolvedArgs) {
-      return resolvedArgs[0] - resolvedArgs[1];
+      var firstArg = getTypeName(resolvedArgs[0]) === TYPE_NULL ? 0 : resolvedArgs[0];
+      var secondArg = getTypeName(resolvedArgs[1]) === TYPE_NULL ? 0 : resolvedArgs[1];
+
+      return firstArg - secondArg;
     },
 
     _functionSum: function(resolvedArgs) {

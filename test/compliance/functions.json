@@ -60,6 +60,18 @@
       "result": 3
     },
     {
+      "expression": "add(null_key, `2`)",
+      "result": 2
+    },
+    {
+      "expression": "add(`1`, null_key)",
+      "result": 1
+    },
+    {
+      "expression": "add(null_key, null_key)",
+      "result": 0
+    },
+    {
       "expression": "unknown_function(`1`, `2`)",
       "error": "unknown-function"
     },
@@ -326,6 +338,18 @@
     {
       "expression": "sub(`5`, `3`)",
       "result": 2
+    },
+    {
+      "expression": "sub(null_key, `3`)",
+      "result": -3
+    },
+    {
+      "expression": "sub(`5`, null_key)",
+      "result": 5
+    },
+    {
+      "expression": "sub(null_key, null_key)",
+      "result": 0
     },
     {
       "expression": "type('abc')",
