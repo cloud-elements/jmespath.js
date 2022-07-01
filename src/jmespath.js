@@ -1471,15 +1471,15 @@
         ceil: {_func: this._functionCeil, _signature: [{types: [TYPE_NUMBER]}]},
         contains: {
             _func: this._functionContains,
-            _signature: [{types: [TYPE_STRING, TYPE_ARRAY]},
+            _signature: [{types: [TYPE_STRING, TYPE_ARRAY, TYPE_NULL]},
                         {types: [TYPE_ANY]}]},
         "ends_with": {
             _func: this._functionEndsWith,
-            _signature: [{types: [TYPE_STRING]}, {types: [TYPE_STRING]}]},
+            _signature: [{types: [TYPE_STRING, TYPE_NULL]}, {types: [TYPE_STRING, TYPE_NULL]}]},
         floor: {_func: this._functionFloor, _signature: [{types: [TYPE_NUMBER]}]},
         length: {
             _func: this._functionLength,
-            _signature: [{types: [TYPE_STRING, TYPE_ARRAY, TYPE_OBJECT]}]},
+            _signature: [{types: [TYPE_STRING, TYPE_ARRAY, TYPE_OBJECT, TYPE_NULL]}]},
         map: {
             _func: this._functionMap,
             _signature: [{types: [TYPE_EXPREF]}, {types: [TYPE_ARRAY]}]},
@@ -1497,7 +1497,7 @@
         sum: {_func: this._functionSum, _signature: [{types: [TYPE_ARRAY_NUMBER]}]},
         "starts_with": {
             _func: this._functionStartsWith,
-            _signature: [{types: [TYPE_STRING]}, {types: [TYPE_STRING]}]},
+            _signature: [{types: [TYPE_STRING, TYPE_NULL]}, {types: [TYPE_STRING, TYPE_NULL]}]},
         min: {
             _func: this._functionMin,
             _signature: [{types: [TYPE_ARRAY_NUMBER, TYPE_ARRAY_STRING]}]},
@@ -1629,12 +1629,26 @@
     },
 
     _functionStartsWith: function(resolvedArgs) {
+        var firstArgTypeName = getTypeName(resolvedArgs[0]);
+        var secondArgTypeName = getTypeName(resolvedArgs[1]);
+
+        if (firstArgTypeName === TYPE_NULL || secondArgTypeName === TYPE_NULL) {
+          return false;
+        }
+
         return resolvedArgs[0].lastIndexOf(resolvedArgs[1]) === 0;
     },
 
     _functionEndsWith: function(resolvedArgs) {
         var searchStr = resolvedArgs[0];
         var suffix = resolvedArgs[1];
+        var searchStrTypeName = getTypeName(searchStr);
+        var suffixTypeName = getTypeName(suffix);
+
+        if (searchStrTypeName === TYPE_NULL || suffixTypeName === TYPE_NULL) {
+          return false;
+        }
+
         return searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1;
     },
 
@@ -1676,6 +1690,13 @@
     },
 
     _functionContains: function(resolvedArgs) {
+        var firstArgTypeName = getTypeName(resolvedArgs[0]);
+        var secondArgTypeName = getTypeName(resolvedArgs[1]);
+
+        if (firstArgTypeName === TYPE_NULL || secondArgTypeName === TYPE_NULL) {
+          return false;
+        }
+
         return resolvedArgs[0].indexOf(resolvedArgs[1]) >= 0;
     },
 
@@ -1684,13 +1705,17 @@
     },
 
     _functionLength: function(resolvedArgs) {
-       if (!isObject(resolvedArgs[0])) {
-         return resolvedArgs[0].length;
-       } else {
-         // As far as I can tell, there's no way to get the length
-         // of an object without O(n) iteration through the object.
-         return Object.keys(resolvedArgs[0]).length;
-       }
+        var argTypeName = getTypeName(resolvedArgs[0]);
+
+        if (argTypeName === TYPE_NULL) {
+          return 0;
+        } else if (argTypeName === TYPE_ARRAY) {
+          return resolvedArgs[0].length;
+        } else {
+          // As far as I can tell, there's no way to get the length
+          // of an object without O(n) iteration through the object.
+          return Object.keys(resolvedArgs[0]).length;
+        }
     },
 
     _functionMap: function(resolvedArgs) {

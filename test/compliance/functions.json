@@ -132,6 +132,18 @@
       "result": false
     },
     {
+      "expression": "contains('abc', null_key)",
+      "result": false
+    },
+    {
+      "expression": "contains(null_key, 'a')",
+      "result": false
+    },
+    {
+      "expression": "contains(null_key, null_key)",
+      "result": false
+    },
+    {
       "expression": "ends_with(str, 'r')",
       "result": true
     },
@@ -154,6 +166,18 @@
     {
       "expression": "ends_with(str, `0`)",
       "error": "invalid-type"
+    },
+    {
+      "expression": "ends_with(null_key, `r`)",
+      "result": false
+    },
+    {
+      "expression": "ends_with(str, null_key)",
+      "result": false
+    },
+    {
+      "expression": "ends_with(null_key, null_key)",
+      "result": false
     },
     {
       "expression": "floor(`1.2`)",
@@ -218,6 +242,10 @@
     {
       "expression": "length(strings[0])",
       "result": 1
+    },
+    {
+      "expression": "length(null_key)",
+      "result": 0
     },
     {
       "expression": "max(numbers)",
@@ -442,6 +470,18 @@
     {
       "expression": "starts_with(str, `0`)",
       "error": "invalid-type"
+    },
+    {
+      "expression": "starts_with(null_key, `S`)",
+      "result": false
+    },
+    {
+      "expression": "starts_with(str, null_key)",
+      "result": false
+    },
+    {
+      "expression": "starts_with(null_key, null_key)",
+      "result": false
     },
     {
       "expression": "sum(numbers)",
