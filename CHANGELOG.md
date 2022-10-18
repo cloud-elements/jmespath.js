@@ -1,3 +1,17 @@
+# [0.21.0](https://github.com/cloud-elements/jmespath.js/compare/v0.20.0...v0.21.0) (2022-10-18)
+
+
+### Bug Fixes
+
+* address starts_with and ends_with edge cases (ENGCE-21162) ([#12](https://github.com/cloud-elements/jmespath.js/issues/12)) ([d4bf3b9](https://github.com/cloud-elements/jmespath.js/commit/d4bf3b9381c1fb033e50fddd697d8680ea8ea30d))
+
+
+### Features
+
+* add mult and div custom functions ([#11](https://github.com/cloud-elements/jmespath.js/issues/11)) ([4e23f14](https://github.com/cloud-elements/jmespath.js/commit/4e23f1480575b4d7a2f8668bed6e3b3e0d58c956))
+
+
+
 # [0.20.0](https://github.com/cloud-elements/jmespath.js/compare/v0.19.0...v0.20.0) (2022-07-01)
 
 
