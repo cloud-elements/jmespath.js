@@ -176,6 +176,10 @@
       "result": false
     },
     {
+      "expression": "ends_with(str, '')",
+      "result": false
+    },
+    {
       "expression": "ends_with(str, `0`)",
       "error": "invalid-type"
     },
@@ -484,11 +488,19 @@
       "result": true
     },
     {
+      "expression": "starts_with('foo bar foo', 'foo')",
+      "result": true
+    },
+    {
       "expression": "starts_with(str, 'Str')",
       "result": true
     },
     {
       "expression": "starts_with(str, 'String')",
+      "result": false
+    },
+    {
+      "expression": "starts_with(str, '')",
       "result": false
     },
     {
