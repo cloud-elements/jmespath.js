@@ -1475,6 +1475,9 @@
             _func: this._functionContains,
             _signature: [{types: [TYPE_STRING, TYPE_ARRAY, TYPE_NULL]},
                         {types: [TYPE_ANY]}]},
+        div: {
+          _func: this._functionDiv,
+          _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
         "ends_with": {
             _func: this._functionEndsWith,
             _signature: [{types: [TYPE_STRING, TYPE_NULL]}, {types: [TYPE_STRING, TYPE_NULL]}]},
@@ -1507,6 +1510,9 @@
           _func: this._functionMinBy,
           _signature: [{types: [TYPE_ARRAY]}, {types: [TYPE_EXPREF]}]
         },
+        mult: {
+          _func: this._functionMult,
+          _signature: [{types: [TYPE_NUMBER, TYPE_NULL]}, {types: [TYPE_NUMBER, TYPE_NULL]}]},
         type: {_func: this._functionType, _signature: [{types: [TYPE_ANY]}]},
         keys: {_func: this._functionKeys, _signature: [{types: [TYPE_OBJECT]}]},
         values: {_func: this._functionValues, _signature: [{types: [TYPE_OBJECT]}]},
@@ -1677,10 +1683,11 @@
     },
 
     _functionAdd: function(resolvedArgs) {
-      var firstArg = getTypeName(resolvedArgs[0]) === TYPE_NULL ? 0 : resolvedArgs[0];
-      var secondArg = getTypeName(resolvedArgs[1]) === TYPE_NULL ? 0 : resolvedArgs[1];
+      if (getTypeName(resolvedArgs[0]) === TYPE_NULL || getTypeName(resolvedArgs[1]) === TYPE_NULL) {
+        return null;
+      }
 
-      return firstArg + secondArg;
+      return resolvedArgs[0] + resolvedArgs[1];
     },
 
     _functionCeil: function(resolvedArgs) {
@@ -1705,6 +1712,14 @@
         }
 
         return resolvedArgs[0].indexOf(resolvedArgs[1]) >= 0;
+    },
+
+    _functionDiv: function(resolvedArgs) {
+      if (getTypeName(resolvedArgs[0]) === TYPE_NULL || getTypeName(resolvedArgs[1]) === TYPE_NULL) {
+        return null;
+      }
+
+      return resolvedArgs[0] / resolvedArgs[1];
     },
 
     _functionFloor: function(resolvedArgs) {
@@ -1787,11 +1802,20 @@
       }
     },
 
-    _functionSub: function(resolvedArgs) {
-      var firstArg = getTypeName(resolvedArgs[0]) === TYPE_NULL ? 0 : resolvedArgs[0];
-      var secondArg = getTypeName(resolvedArgs[1]) === TYPE_NULL ? 0 : resolvedArgs[1];
+    _functionMult: function(resolvedArgs) {
+      if (getTypeName(resolvedArgs[0]) === TYPE_NULL || getTypeName(resolvedArgs[1]) === TYPE_NULL) {
+        return null;
+      }
 
-      return firstArg - secondArg;
+      return resolvedArgs[0] * resolvedArgs[1];
+    },
+
+    _functionSub: function(resolvedArgs) {
+      if (getTypeName(resolvedArgs[0]) === TYPE_NULL || getTypeName(resolvedArgs[1]) === TYPE_NULL) {
+        return null;
+      }
+
+      return resolvedArgs[0] - resolvedArgs[1];
     },
 
     _functionSum: function(resolvedArgs) {

@@ -61,15 +61,15 @@
     },
     {
       "expression": "add(null_key, `2`)",
-      "result": 2
+      "result": null
     },
     {
       "expression": "add(`1`, null_key)",
-      "result": 1
+      "result": null
     },
     {
       "expression": "add(null_key, null_key)",
-      "result": 0
+      "result": null
     },
     {
       "expression": "unknown_function(`1`, `2`)",
@@ -154,6 +154,22 @@
     {
       "expression": "contains(null_key, null_key)",
       "result": false
+    },
+    {
+      "expression": "div(`6`, `2`)",
+      "result": 3
+    },
+    {
+      "expression": "div(null_key, `2`)",
+      "result": null
+    },
+    {
+      "expression": "div(`6`, null_key)",
+      "result": null
+    },
+    {
+      "expression": "div(null_key, null_key)",
+      "result": null
     },
     {
       "expression": "ends_with(str, 'r')",
@@ -341,15 +357,15 @@
     },
     {
       "expression": "sub(null_key, `3`)",
-      "result": -3
+      "result": null
     },
     {
       "expression": "sub(`5`, null_key)",
-      "result": 5
+      "result": null
     },
     {
       "expression": "sub(null_key, null_key)",
-      "result": 0
+      "result": null
     },
     {
       "expression": "type('abc')",
@@ -454,6 +470,22 @@
     {
       "expression": "join('|', empty_list)",
       "result": ""
+    },
+    {
+      "expression": "mult(`6`, `2`)",
+      "result": 12
+    },
+    {
+      "expression": "mult(null_key, `2`)",
+      "result": null
+    },
+    {
+      "expression": "mult(`6`, null_key)",
+      "result": null
+    },
+    {
+      "expression": "mult(null_key, null_key)",
+      "result": null
     },
     {
       "expression": "reverse(numbers)",
