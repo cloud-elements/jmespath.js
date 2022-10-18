@@ -1640,9 +1640,7 @@
           return false;
         }
 
-        return resolvedArgs[1].length > 0
-          ? resolvedArgs[0].indexOf(resolvedArgs[1]) === 0
-          : false;
+        return resolvedArgs[1].length > 0 && resolvedArgs[0].indexOf(resolvedArgs[1]) === 0;
     },
 
     _functionEndsWith: function(resolvedArgs) {
@@ -1655,9 +1653,7 @@
           return false;
         }
 
-        return suffix.length > 0
-          ? searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1
-          : false;
+        return suffix.length > 0 && searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1;
     },
 
     _functionReverse: function(resolvedArgs) {
