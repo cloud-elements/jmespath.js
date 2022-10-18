@@ -1646,7 +1646,7 @@
           return false;
         }
 
-        return resolvedArgs[0].lastIndexOf(resolvedArgs[1]) === 0;
+        return resolvedArgs[1].length > 0 && resolvedArgs[0].indexOf(resolvedArgs[1]) === 0;
     },
 
     _functionEndsWith: function(resolvedArgs) {
@@ -1659,7 +1659,7 @@
           return false;
         }
 
-        return searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1;
+        return suffix.length > 0 && searchStr.indexOf(suffix, searchStr.length - suffix.length) !== -1;
     },
 
     _functionReverse: function(resolvedArgs) {
