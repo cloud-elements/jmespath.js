@@ -218,6 +218,28 @@ describe('strictDeepEqual', function() {
 });
 
 describe('search', function() {
+    it('should by default support case sensitive comparison via compatators', function() {
+        assert.equal(jmespath.search({foo: 'bar'}, "foo == 'BAR'"), false);
+        assert.equal(jmespath.search({foo: 'BAR'}, "foo == 'bar'"), false);
+        assert.equal(jmespath.search({foo: 'bar'}, "foo != 'BAR'"), true);
+        assert.equal(jmespath.search({foo: 'BAR'}, "foo != 'bar'"), true);
+    });
+    it('should support case insensitive comparison via compatators', function() {
+        var opts = { useCaseInsensitiveComparison: true };
+        assert.equal(jmespath.search({foo: 'bar'}, "foo == 'BAR'", opts), true);
+        assert.equal(jmespath.search({foo: 'BAR'}, "foo == 'bar'", opts), true);
+        assert.equal(jmespath.search({foo: 'bar'}, "foo != 'BAR'", opts), false);
+        assert.equal(jmespath.search({foo: 'BAR'}, "foo != 'bar'", opts), false);
+    });
+    it('should by default support case sensitive comparison via functions', function() {
+        assert.equal(jmespath.search({foo: 'bar'}, "starts_with(foo, 'B')"), false);
+        assert.equal(jmespath.search({foo: 'bar'}, "ends_with(foo, 'AR')"), false);
+    });
+    it('should support case insensitive comparison via functions', function() {
+        var opts = { useCaseInsensitiveComparison: true };
+        assert.equal(jmespath.search({foo: 'bar'}, "starts_with(foo, 'B')", opts), true);
+        assert.equal(jmespath.search({foo: 'bar'}, "ends_with(foo, 'AR')", opts), true);
+    });
     it(
         'should throw a readable error when invalid arguments are provided to a function',
         function() {
