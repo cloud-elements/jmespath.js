@@ -266,7 +266,7 @@
   function Lexer() {
   }
   Lexer.prototype = {
-      tokenize: function(stream) {
+      tokenize: function(stream, opts) {
           var tokens = [];
           this._current = 0;
           var start;
@@ -300,13 +300,13 @@
                                start: start});
               } else if (stream[this._current] === "'") {
                   start = this._current;
-                  identifier = this._consumeRawStringLiteral(stream);
+                  identifier = this._consumeRawStringLiteral(stream, opts);
                   tokens.push({type: TOK_LITERAL,
                                value: identifier,
                                start: start});
               } else if (stream[this._current] === "`") {
                   start = this._current;
-                  var literal = this._consumeLiteral(stream);
+                  var literal = this._consumeLiteral(stream, opts);
                   tokens.push({type: TOK_LITERAL,
                                value: literal,
                                start: start});
@@ -370,7 +370,7 @@
           return JSON.parse(stream.slice(start, this._current));
       },
 
-      _consumeRawStringLiteral: function(stream) {
+      _consumeRawStringLiteral: function(stream, opts) {
           var start = this._current;
           this._current++;
           var maxLength = stream.length;
@@ -387,7 +387,10 @@
           }
           this._current++;
           var literal = stream.slice(start + 1, this._current - 1);
-          return literal.replace("\\'", "'");
+
+          return opts != undefined && opts.caseInsensitive === true
+              ? literal.replace("\\'", "'").toLowerCase()
+              : literal.replace("\\'", "'");
       },
 
       _consumeNumber: function(stream) {
@@ -448,7 +451,7 @@
           }
       },
 
-      _consumeLiteral: function(stream) {
+      _consumeLiteral: function(stream, opts) {
           this._current++;
           var start = this._current;
           var maxLength = stream.length;
@@ -474,7 +477,10 @@
           }
           // +1 gets us to the ending "`", +1 to move on to the next char.
           this._current++;
-          return literal;
+
+          return opts != undefined && opts.caseInsensitive === true && getTypeName(literal) === TYPE_STRING
+              ? literal.toLowerCase()
+              : literal;
       },
 
       _looksLikeJSON: function(literalString) {
@@ -535,8 +541,8 @@
   }
 
   Parser.prototype = {
-      parse: function(expression) {
-          this._loadTokens(expression);
+      parse: function(expression, opts) {
+          this._loadTokens(expression, opts);
           this.index = 0;
           var ast = this.expression(0);
           if (this._lookahead(0) !== TOK_EOF) {
@@ -549,9 +555,9 @@
           return ast;
       },
 
-      _loadTokens: function(expression) {
+      _loadTokens: function(expression, opts) {
           var lexer = new Lexer();
-          var tokens = lexer.tokenize(expression);
+          var tokens = lexer.tokenize(expression, opts);
           tokens.push({type: TOK_EOF, value: "", start: expression.length});
           this.tokens = tokens;
       },
@@ -2020,22 +2026,22 @@
     }
   };
 
-  function compile(stream) {
+  function compile(stream, opts) {
     var parser = new Parser();
-    var ast = parser.parse(stream);
+    var ast = parser.parse(stream, opts);
     return ast;
   }
 
-  function tokenize(stream) {
+  function tokenize(stream, opts) {
       var lexer = new Lexer();
-      return lexer.tokenize(stream);
+      return lexer.tokenize(stream, opts);
   }
 
-  function search(data, expression) {
-      return decorate({})(expression)(data);
+  function search(data, expression, opts) {
+      return decorate({}, opts)(expression)(data);
   }
 
-  function decorate(fns) {
+  function decorate(fns, opts) {
       var parser = new Parser();
       // This needs to be improved.  Both the interpreter and runtime depend on
       // each other.  The runtime needs the interpreter to support exprefs.
@@ -2045,25 +2051,25 @@
       var interpreter = new TreeInterpreter(runtime);
       runtime._interpreter = interpreter;
       return function (expression) {
-        var node = parser.parse(expression);
+        var node = parser.parse(expression, opts);
         return function (data) {
           return interpreter.search(node, data);
         };
       };
   }
 
-  function over(data, expression, fn) {
-    return decorateOver({})(expression)(data, fn);
+  function over(data, expression, fn, opts) {
+    return decorateOver({}, opts)(expression)(data, fn);
   }
 
-  function decorateOver(fns) {
+  function decorateOver(fns, opts) {
       var parser = new Parser();
       var runtime = new Runtime();
       Object.assign(runtime.functionTable, fns);
       var interpreter = new OverTreeInterpreter(runtime);
       runtime._interpreter = interpreter;
       return function (expression) {
-        var node = parser.parse(expression);
+        var node = parser.parse(expression, opts);
         return function (data, fn) {
           interpreter.search(node, data, fn);
 

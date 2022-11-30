@@ -81,6 +81,18 @@ describe('tokenize', function() {
                           value: "foo",
                           start: 0}]);
     });
+    it('should tokenize literal strings to lower case if option set', function() {
+      assert.deepEqual(tokenize("`\"FOO\"`", { caseInsensitive: true }),
+                       [{type: "Literal",
+                        value: "foo",
+                        start: 0}]);
+    });
+    it('should tokenize raw string literals to lower case if option set', function() {
+      assert.deepEqual(tokenize("'FOO'", { caseInsensitive: true }),
+                       [{type: "Literal",
+                        value: "foo",
+                        start: 0}]);
+    });
     it('should tokenize json literals', function() {
         assert.deepEqual(tokenize("`true`"),
                          [{type: "Literal",
@@ -93,6 +105,12 @@ describe('tokenize', function() {
                           value: "foo",
                           start: 0}]);
     });
+    it('should not requiring surrounding quotes for strings and lower case if option set', function() {
+      assert.deepEqual(tokenize("`FOO`", { caseInsensitive: true }),
+                       [{type: "Literal",
+                        value: "foo",
+                        start: 0}]);
+  });
     it('should not requiring surrounding quotes for numbers', function() {
         assert.deepEqual(tokenize("`20`"),
                          [{type: "Literal",
@@ -218,6 +236,14 @@ describe('strictDeepEqual', function() {
 });
 
 describe('search', function() {
+    it('should support case insensitivity', function() {
+        var opts = { caseInsensitive: true };
+        assert.equal(jmespath.search({foo: 'bar'}, "foo == 'BAR'", opts), true);
+        assert.equal(jmespath.search({foo: 'BAR'}, "foo == 'bar'", opts), true);
+        assert.equal(jmespath.search({foo: 'BaR'}, "foo == 'bAr'", opts), true);
+        assert.equal(jmespath.search({foo: 'bar'}, "foo == 'bar'", opts), true);
+
+    });
     it(
         'should throw a readable error when invalid arguments are provided to a function',
         function() {
