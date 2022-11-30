@@ -1,3 +1,12 @@
+## [0.22.1](https://github.com/cloud-elements/jmespath.js/compare/v0.22.0...v0.22.1) (2022-11-30)
+
+
+### Bug Fixes
+
+* update TS signature for search to include opts ([#15](https://github.com/cloud-elements/jmespath.js/issues/15)) ([7e49b3b](https://github.com/cloud-elements/jmespath.js/commit/7e49b3bb3814a1faeb96519d0834ed1a35b52984))
+
+
+
 # [0.22.0](https://github.com/cloud-elements/jmespath.js/compare/v0.21.0...v0.22.0) (2022-11-30)
 
 
