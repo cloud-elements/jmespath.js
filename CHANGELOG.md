@@ -1,3 +1,12 @@
+# [0.22.0](https://github.com/cloud-elements/jmespath.js/compare/v0.21.0...v0.22.0) (2022-11-30)
+
+
+### Features
+
+* support case insensitive comparisons (ENGCE-22058) ([#14](https://github.com/cloud-elements/jmespath.js/issues/14)) ([a66be83](https://github.com/cloud-elements/jmespath.js/commit/a66be83f63601e170e68fe17cf8fc52524a7df0c))
+
+
+
 # [0.21.0](https://github.com/cloud-elements/jmespath.js/compare/v0.20.0...v0.21.0) (2022-10-18)
 
 
