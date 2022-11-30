@@ -889,8 +889,9 @@
       }
   };
 
-  function TreeInterpreter(runtime) {
+  function TreeInterpreter(runtime, opts) {
     this.runtime = runtime;
+    this._opts = opts;
   }
 
   TreeInterpreter.prototype = {
@@ -1012,6 +1013,16 @@
               second = this.visit(node.children[1], value);
               var firstTypeName = getTypeName(first);
               var secondTypeName = getTypeName(second);
+              var caseInsensitive = this._opts && this._opts.useCaseInsensitiveComparison === true;
+
+              if (caseInsensitive && firstTypeName === TYPE_STRING) {
+                first = first.toLowerCase();
+              }
+
+              if (caseInsensitive && secondTypeName === TYPE_STRING) {
+                second = second.toLowerCase();
+              }
+
               switch(node.name) {
                 case TOK_EQ:
                   if (firstTypeName === TYPE_NULL || secondTypeName === TYPE_NULL) {
@@ -1117,8 +1128,14 @@
               return this._rootValue;
             case "Function":
               var resolvedArgs = [];
+              var caseInsensitive = this._opts && this._opts.useCaseInsensitiveComparison === true;
               for (i = 0; i < node.children.length; i++) {
-                  resolvedArgs.push(this.visit(node.children[i], value));
+                  var val = this.visit(node.children[i], value);
+                  resolvedArgs.push(
+                    caseInsensitive && getTypeName(val) === TYPE_STRING
+                        ? val.toLowerCase()
+                        : val
+                  );
               }
               return this.runtime.callFunction(node.name, resolvedArgs);
             case "ExpressionReference":
@@ -2031,18 +2048,18 @@
       return lexer.tokenize(stream);
   }
 
-  function search(data, expression) {
-      return decorate({})(expression)(data);
+  function search(data, expression, opts) {
+      return decorate({}, opts)(expression)(data);
   }
 
-  function decorate(fns) {
+  function decorate(fns, opts) {
       var parser = new Parser();
       // This needs to be improved.  Both the interpreter and runtime depend on
       // each other.  The runtime needs the interpreter to support exprefs.
       // There's likely a clean way to avoid the cyclic dependency.
       var runtime = new Runtime();
       Object.assign(runtime.functionTable, fns);
-      var interpreter = new TreeInterpreter(runtime);
+      var interpreter = new TreeInterpreter(runtime, opts);
       runtime._interpreter = interpreter;
       return function (expression) {
         var node = parser.parse(expression);
