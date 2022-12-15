@@ -222,7 +222,6 @@ describe('search', function() {
         assert.equal(jmespath.search({foo: 'bar'}, "foo == 'BAR'"), false);
         assert.equal(jmespath.search({foo: 'BAR'}, "foo == 'bar'"), false);
         assert.equal(jmespath.search({foo: 'bar'}, 'contains(`["BAR"]`, foo)'), false);
-        assert.equal(jmespath.search({foo: 'bar'}, 'contains(`["BAR"]`, foo)'), false);
         assert.equal(jmespath.search({foo: 'bar'}, '`{"bar": "baz", "qux": 2}`.bar == \'BAZ\''), false);
         assert.equal(jmespath.search({foo: 'bar'}, "foo != 'BAR'"), true);
         assert.equal(jmespath.search({foo: 'BAR'}, "foo != 'bar'"), true);
