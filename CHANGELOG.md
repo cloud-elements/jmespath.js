@@ -1,3 +1,12 @@
+## [0.22.2](https://github.com/cloud-elements/jmespath.js/compare/v0.22.1...v0.22.2) (2022-12-15)
+
+
+### Bug Fixes
+
+* non-scalar types should be made case insensitive with case insensitive flag (ENGCE-23763) ([#16](https://github.com/cloud-elements/jmespath.js/issues/16)) ([f659573](https://github.com/cloud-elements/jmespath.js/commit/f6595733a8e82f4f67416b23ece2a3adfb838e5f))
+
+
+
 ## [0.22.1](https://github.com/cloud-elements/jmespath.js/compare/v0.22.0...v0.22.1) (2022-11-30)
 
 
