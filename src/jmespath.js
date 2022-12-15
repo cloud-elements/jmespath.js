@@ -240,6 +240,29 @@
              ch === "_";
   }
 
+  // Lower case string values, immutably, for scalar and non-scalar types alike.
+  function toCaseInsensitive(u) {
+    switch (getTypeName(u)) {
+      case TYPE_STRING: {
+        return u.toLowerCase();
+      }
+      case TYPE_ARRAY: {
+        return u.map(toCaseInsensitive);
+      }
+      case TYPE_OBJECT: {
+        return Object
+          .entries(u)
+          .reduce((acc, [key, value]) => {
+            acc[key] = toCaseInsensitive(value);
+            return acc;
+          }, {});
+      }
+      default: {
+        return u;
+      }
+    }
+  }
+
   function getTypeName(obj) {
     switch (Object.prototype.toString.call(obj)) {
         case "[object String]":
@@ -1015,12 +1038,9 @@
               var secondTypeName = getTypeName(second);
               var caseInsensitive = this._opts && this._opts.useCaseInsensitiveComparison === true;
 
-              if (caseInsensitive && firstTypeName === TYPE_STRING) {
-                first = first.toLowerCase();
-              }
-
-              if (caseInsensitive && secondTypeName === TYPE_STRING) {
-                second = second.toLowerCase();
+              if (caseInsensitive) {
+                first = toCaseInsensitive(first);
+                second = toCaseInsensitive(second);
               }
 
               switch(node.name) {
@@ -1131,11 +1151,7 @@
               var caseInsensitive = this._opts && this._opts.useCaseInsensitiveComparison === true;
               for (i = 0; i < node.children.length; i++) {
                   var val = this.visit(node.children[i], value);
-                  resolvedArgs.push(
-                    caseInsensitive && getTypeName(val) === TYPE_STRING
-                        ? val.toLowerCase()
-                        : val
-                  );
+                  resolvedArgs.push(caseInsensitive ? toCaseInsensitive(val) : val);
               }
               return this.runtime.callFunction(node.name, resolvedArgs);
             case "ExpressionReference":

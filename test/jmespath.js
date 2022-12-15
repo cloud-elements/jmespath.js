@@ -221,15 +221,23 @@ describe('search', function() {
     it('should by default support case sensitive comparison via compatators', function() {
         assert.equal(jmespath.search({foo: 'bar'}, "foo == 'BAR'"), false);
         assert.equal(jmespath.search({foo: 'BAR'}, "foo == 'bar'"), false);
+        assert.equal(jmespath.search({foo: 'bar'}, 'contains(`["BAR"]`, foo)'), false);
+        assert.equal(jmespath.search({foo: 'bar'}, '`{"bar": "baz", "qux": 2}`.bar == \'BAZ\''), false);
         assert.equal(jmespath.search({foo: 'bar'}, "foo != 'BAR'"), true);
         assert.equal(jmespath.search({foo: 'BAR'}, "foo != 'bar'"), true);
+        assert.equal(jmespath.search({foo: 2}, 'contains(`[1, 2, 3]`, foo)'), true);
+        assert.equal(jmespath.search({foo: 2}, '`{"bar": 2}`.bar == foo'), true);
     });
     it('should support case insensitive comparison via compatators', function() {
         var opts = { useCaseInsensitiveComparison: true };
         assert.equal(jmespath.search({foo: 'bar'}, "foo == 'BAR'", opts), true);
         assert.equal(jmespath.search({foo: 'BAR'}, "foo == 'bar'", opts), true);
+        assert.equal(jmespath.search({foo: 'bar'}, 'contains(`["BAR"]`, foo)', opts), true);
+        assert.equal(jmespath.search({foo: 'bar'}, '`{"bar": "baz", "qux": 2}`.bar == \'BAZ\'', opts), true);
         assert.equal(jmespath.search({foo: 'bar'}, "foo != 'BAR'", opts), false);
         assert.equal(jmespath.search({foo: 'BAR'}, "foo != 'bar'", opts), false);
+        assert.equal(jmespath.search({foo: 2}, 'contains(`[1, 2, 3]`, foo)', opts), true);
+        assert.equal(jmespath.search({foo: 2}, '`{"bar": 2}`.bar == foo', opts), true);
     });
     it('should by default support case sensitive comparison via functions', function() {
         assert.equal(jmespath.search({foo: 'bar'}, "starts_with(foo, 'B')"), false);
