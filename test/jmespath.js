@@ -290,6 +290,89 @@ describe('over', function() {
   });
 });
 
+describe('remove', function() {
+    it('should remove a basic traversal', function() {
+        let testData = {
+            a: {
+                "b": {
+                    "c": [1, 2, 3]
+                }
+            }
+        }
+        assert.deepStrictEqual(
+            jmespath.remove(testData, 'a.b.c', (a) => a.toString()),
+            {a: {b: {}}}
+        );
+    });
+
+    it('should remove a nested list traversal', function() {
+        let testData = {
+            a: [
+                {
+                    "b": {
+                        "c": [1, 2, 3]
+                    }
+                }
+            ]
+        }
+        assert.deepStrictEqual(
+            jmespath.remove(testData, 'a[0].b.c', (a) => a.toString()),
+            {a: [{b: {}}]}
+        );
+    });
+    it('should NOT remove a nested list', function() {
+        let testData = {
+            a: [
+                {
+                    "b": {
+                        "c": [[1,2,3], 2, 3]
+                    }
+                }
+            ]
+        }
+        assert.deepStrictEqual(
+            jmespath.remove(testData, 'a[0].b.c[0]', (a) => a.toString()),
+            {a: [{b: {"c": [[1,2,3], 2, 3]}}]}
+        );
+    });
+    it('should NOT remove a flatten', function() {
+        let testData = {
+            a: [
+                [{"a": "b"}],
+                "c"
+            ]
+        }
+        assert.deepStrictEqual(
+            jmespath.remove(testData, 'a[]', (a) => a.toString()),
+            {a:[[{"a":"b"}], "c"]}
+        );
+    });
+    it('should NOT remove a flatten index', function() {
+        let testData = {
+            a: [
+                [{"a": "b"}],
+                "c"
+            ]
+        }
+        assert.deepStrictEqual(
+            jmespath.remove(testData, 'a[][0]', (a) => a.toString()),
+            {a:[[{"a":"b"}], "c"]}
+        );
+    });
+    it('should NOT remove a flatten slice', function() {
+        let testData = {
+            a: [
+                [{"a": "b"}],
+                "c"
+            ]
+        }
+        assert.deepStrictEqual(
+            jmespath.remove(testData, 'a[][0:]', (a) => a.toString()),
+            {a:[[{"a":"b"}], "c"]}
+        );
+    });
+});
+
 describe('decorate', function() {
   it(
     'should call a custom function when called via decorator',
