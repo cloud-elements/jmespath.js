@@ -1,3 +1,12 @@
+# [0.23.0](https://github.com/cloud-elements/jmespath.js/compare/v0.22.2...v0.23.0) (2023-08-03)
+
+
+### Features
+
+* add a remove function ([2f7e57e](https://github.com/cloud-elements/jmespath.js/commit/2f7e57e881fbfefb5699ecd032911b49ffaad60e))
+
+
+
 ## [0.22.2](https://github.com/cloud-elements/jmespath.js/compare/v0.22.1...v0.22.2) (2022-12-15)
 
 

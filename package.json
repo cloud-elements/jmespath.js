@@ -1,7 +1,7 @@
 {
   "name": "@cloudelements/jmespath",
   "description": "JMESPath implementation in JavaScript",
-  "version": "0.22.2",
+  "version": "0.23.0",
   "author": {
     "name": "James Saryerwinnie",
     "email": "js@jamesls.com",
