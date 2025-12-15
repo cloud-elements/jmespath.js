@@ -14,3 +14,7 @@ export function decorate(fns: Record<string, {_func: Function, _signature: Array
   (query: string) =>
   (jsonDoc: any) =>
   any;
+
+export function compile(query: string): any;
+
+export function tokenize(query: string): any;
