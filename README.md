@@ -21,6 +21,62 @@ jmespath.search({foo: {bar: {baz: [1, 2, 3]}}}, 'foo.bar.baz[2]')
 $ npm install --save @cloudelements/jmespath
 ```
 
+## Using the `contains` function
+
+The `contains` function checks whether a string or array contains a given value. It accepts two
+arguments: the subject (a string or array) and the search value.
+
+**Syntax:** `contains(subject, search)`
+
+### Searching within an array
+
+In JMESPath expressions, literal values are wrapped in backticks (`` ` ``), while string literals
+use single quotes (`'`).
+
+```js
+const jmespath = require('@cloudelements/jmespath');
+
+// Check if an array contains a number (backticks denote a literal value in JMESPath)
+jmespath.search({values: [1, 2, 3]}, 'contains(values, `2`)')
+// => true
+
+// Check if an array contains a string
+jmespath.search({tags: ['foo', 'bar', 'baz']}, "contains(tags, 'bar')")
+// => true
+
+// Returns false when the value is not present
+jmespath.search({tags: ['foo', 'bar']}, "contains(tags, 'qux')")
+// => false
+```
+
+### Searching within a string
+
+```js
+// Check if a string contains a substring
+jmespath.search({name: 'foobar'}, "contains(name, 'foo')")
+// => true
+
+jmespath.search({name: 'foobar'}, "contains(name, 'baz')")
+// => false
+```
+
+### Case-insensitive search
+
+Pass `{ useCaseInsensitiveComparison: true }` as the third argument to `search` to perform
+case-insensitive matching:
+
+```js
+const opts = { useCaseInsensitiveComparison: true };
+
+// String comparison ignores case
+jmespath.search({name: 'FooBar'}, "contains(name, 'foo')", opts)
+// => true
+
+// Array search ignores case
+jmespath.search({tags: ['FOO', 'BAR']}, "contains(tags, 'foo')", opts)
+// => true
+```
+
 ## Adding custom functions
 
 Custom functions can be added to the JMESPath runtime by using the `decorate` function:
