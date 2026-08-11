@@ -6,10 +6,10 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: uipath-ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819  # v1.0.0
+    - uses: actions/setup-node@f1f314fca9dfce2769ece7d933488f076716723e  # v1.4.6
       with:
         node-version: ${{ env.NODE_VERSION }}
     - run: npm install
